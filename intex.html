@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sabby 💖 Valentine Proposal</title>
+<style>
+body {
+    margin:0;
+    min-height:100vh;
+    background: linear-gradient(135deg, #ffb6c1, #87cefa);
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    overflow: hidden;
+}
+
+h1 {
+    color: #ff4d6d;
+    margin-top: 40px;
+    font-size: 36px;
+    text-shadow: 1px 1px 3px #fff;
+}
+
+p {
+    color: #444;
+    font-size: 20px;
+    margin: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#yes {
+    background: #ff4d6d;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+#no {
+    background: #ccc;
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.floatMessage {
+    position: fixed;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.9;
+}
+
+.heart {
+    position: fixed;
+    font-size: 24px;
+    animation: rise 6s linear infinite;
+    z-index: 1;
+}
+
+@keyframes rise {
+    0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Sabby 💖</h1>
+<p>Your eyes and smile make my heart melt 💖😊</p>
+
+<div class="card" id="card">
+    <p>Will you be my Valentine?</p>
+    <button id="yes">YES 💖</button>
+    <button id="no">NO 🙈</button>
+</div>
+
+<script>
+// YES and NO buttons
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const card = document.getElementById("card");
+
+// NO button moves when hovered
+noBtn.addEventListener("mouseover", ()=>{
+    const x = Math.random() * 70; // random left
+    const y = Math.random() * 50; // random top
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "vw";
+    noBtn.style.top = y + "vh";
+});
+
+// YES button triggers celebration
+yesBtn.addEventListener("click", ()=>{
+    card.innerHTML=`
+        <h1>YAY SABBY!!! 💕🥰</h1>
+        <p>Your eyes and smile are magical and I adore you 💖😊</p>
+        <p>Can we go out for lunch? 🍰💞</p>
+    `;
+    
+    // Spawn lots of romantic lines from everywhere
+    const lines = [
+        "I love your eyes 👀💖",
+        "Your smile lights up my world 😊💘",
+        "You are my Valentine 💞",
+        "Forever with you 🥰",
+        "I can't stop thinking about you 💌",
+        "You make my heart melt 💖"
+    ];
+    
+    function createLine(){
+        const m = document.createElement("div");
+        m.className = "floatMessage";
+        m.innerText = lines[Math.floor(Math.random()*lines.length)];
+        m.style.left = Math.random()*90 + "vw";
+        m.style.top = Math.random()*90 + "vh";
+        m.style.fontSize = (16 + Math.random()*12) + "px";
+        document.body.appendChild(m);
+        let moveX = (Math.random()*2-1)*1.5;
+        let moveY = (Math.random()*2-1)*1.5;
+        let interval = setInterval(()=>{
+            const top = parseFloat(m.style.top);
+            const left = parseFloat(m.style.left);
+            m.style.top = (top + moveY) + "px";
+            m.style.left = (left + moveX) + "px";
+        }, 50);
+        setTimeout(()=>{
+            clearInterval(interval);
+            m.remove();
+        }, 8000);
+    }
+    
+    setInterval(createLine, 200);
+});
+
+// floating hearts and cakes
+function createHeart(){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = ["💖","💕","💘","🎂","🍰","🍓"][Math.floor(Math.random()*6)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (20 + Math.random()*20) + "px";
+    h.style.animationDuration = (4 + Math.random()*4) + "s";
+    h.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(h);
+    setTimeout(()=> h.remove(), 8000);
+}
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
